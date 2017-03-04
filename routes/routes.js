@@ -1,3 +1,5 @@
+var datauri = require("../processing/datauri.js");
+
 var appRouter = function(app) {
     var oembedRoute = "/oembed";
 
@@ -26,7 +28,7 @@ var appRouter = function(app) {
             return res.send({
                 type: "rich",
                 version: "1.0",
-                html: html,
+                html: "<iframe src='" + datauri(html) + "' />",
                 width: 0,
                 height: 0
             });
