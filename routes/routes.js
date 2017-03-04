@@ -1,22 +1,35 @@
 var appRouter = function(app) {
-    var rootRoute = "/";
+    var oembedRoute = "/oembed";
 
-    app.get(rootRoute, function(req, res) {
+    app.get(oembedRoute, function(req, res) {
         var url = req.query.url;
 
         if (!url) {
             return res.status(400).send({ status: 400, message: "bad request: missing url" });
         } else {
-            return res.send("request to embed url " + url);
+            // TODO formalize oEmbed response
+            return res.send({
+                type: "rich",
+                version: "1.0",
+                html: "TODO for " + url,
+                width: 0,
+                height: 0
+            });
         }
     });
 
-    app.post(rootRoute, function(req, res) {
+    app.post(oembedRoute, function(req, res) {
         if (!req.body) {
             return res.status(400).send({ status: 400, message: "bad request: missing request body" });
         } else {
             var html = req.body.html;
-            return res.send("request to embed html " + html);
+            return res.send({
+                type: "rich",
+                version: "1.0",
+                html: html,
+                width: 0,
+                height: 0
+            });
         }
     });
 }
