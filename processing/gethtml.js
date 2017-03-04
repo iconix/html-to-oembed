@@ -2,6 +2,8 @@ var https = require('https');
 
 var getHtml = function(url, oEmbedRes, onResult) {
     // TODO make sure url is properly formed
+    // TODO follow 301/302s
+    // TODO support http
     https.get(url, function(res){
         var body = '';
 

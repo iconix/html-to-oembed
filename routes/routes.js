@@ -31,12 +31,14 @@ var appRouter = function(app) {
     });
 }
 
+// iframe scale trick: http://stackoverflow.com/a/11382661
+
 var onGetHtml = function(res, html) {
     // TODO formalize oEmbed response
     return res.send({
         type: 'rich',
         version: '1.0',
-        html: '<iframe width="1024" height="768" style="-webkit-transform:scale(0.5);-moz-transform-scale(0.5);" src="' + datauri(html) + '" />',
+        html: '<iframe width="100%" height="100%" style="-webkit-transform:scale(0.5);-moz-transform-scale(0.5);" src="' + datauri(html) + '" />',
         width: 0,
         height: 0
     });
