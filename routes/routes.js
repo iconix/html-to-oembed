@@ -8,40 +8,43 @@ var appRouter = function(app) {
         var url = req.query.url;
 
         if (!url) {
-            return res.status(400).send({ status: 400, message: 'bad request: missing url' });
+            return getErrResponse(res, 400, 'bad request: missing url');
         } else {
-
-            return gethtml(url, res, onGetHtml);
+            return gethtml(url, res, onGetHtml, onGetError);
         }
     });
 
     app.post(oembedRoute, function(req, res) {
         if (!req.body) {
-            return res.status(400).send({ status: 400, message: 'bad request: missing request body' });
+            return getErrResponse(res, 400, 'bad request: missing request body');
         } else {
-            var html = req.body.html;
-            return res.send({
-                type: 'rich',
-                version: '1.0',
-                html: '<iframe width="1024" height="768" style="-webkit-transform:scale(0.5);-moz-transform-scale(0.5);" src="' + datauri(html) + '" />',
-                width: 0,
-                height: 0
-            });
+            return getOEmbedResponse(res, datauri(req.body.html));
         }
     });
 }
 
-// iframe scale trick: http://stackoverflow.com/a/11382661
-
 var onGetHtml = function(res, html) {
-    // TODO formalize oEmbed response
+    return getOEmbedResponse(res, datauri(html));
+}
+
+var onGetError = function(res, statusCode, message) {
+    return getErrResponse(res, statusCode, message);
+}
+
+var getOEmbedResponse = function(res, html) {
+    // TODO: formalize oEmbed response according to http://oembed.com/
     return res.send({
         type: 'rich',
         version: '1.0',
-        html: '<iframe width="100%" height="100%" style="-webkit-transform:scale(0.5);-moz-transform-scale(0.5);" src="' + datauri(html) + '" />',
-        width: 0,
-        height: 0
+        // iframe scale trick: http://stackoverflow.com/a/11382661
+        html: `<iframe width=\"100%\" height=\"100%\" style=\"-webkit-transform:scale(0.5);-moz-transform-scale(0.5);\" src=\"${html}\" />`,
+        width: 1024, // TODO:
+        height: 768 // TODO:
     });
+}
+
+var getErrResponse = function(res, statusCode, message) {
+    return res.status(statusCode).send({ status: statusCode, message: message });
 }
 
 module.exports = appRouter;
