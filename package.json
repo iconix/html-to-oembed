@@ -1,20 +1,23 @@
 {
-  "name": "oembedforhtmlmode",
+  "name": "html-to-oembed",
   "version": "1.0.0",
   "description": "M&M time project: oEmbed for HTML mode in the Web Clipper",
   "main": "app.js",
   "scripts": {
+    "deploy": "now https://github.com/iconix/html-to-oembed",
     "server": "node app.js",
-    "start": "npm run server",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "npm run server"
   },
   "author": "iconix",
+  "engines": {
+    "node": "6.10.1"
+  },
   "dependencies": {
     "body-parser": "^1.17.0",
     "express": "^4.15.0",
     "request": "^2.81.0"
   },
-  "engines": {
-    "node": "4.2.2"
+  "devDependencies": {
+    "now": "^4.10.2"
   }
 }
