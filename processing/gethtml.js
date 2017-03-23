@@ -24,7 +24,7 @@ var getHtml = function(url, oEmbedRes, onResult, onError) {
 }
 
 var formatException = function(e) {
-    return e.toString().replace(/"/g, '\\"').toLowerCase();
+    return e.toString().toLowerCase();
 }
 
 module.exports = getHtml;

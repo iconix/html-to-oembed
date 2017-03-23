@@ -7,7 +7,7 @@ var toDataUri = function(html) {
            .replace(/"/g, '%22')     // <-- Escape "
            .replace(/'/g, '%27');    // <-- Escape ' (to be 100% safe)
 
-    return 'data:text/html;charset=UTF-8,' + html;
+    return `data:text/html;charset=UTF-8,${html}`;
 }
 
 module.exports = toDataUri;

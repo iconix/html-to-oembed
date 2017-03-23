@@ -33,18 +33,18 @@ var onGetError = function(res, statusCode, message) {
 
 var getOEmbedResponse = function(res, html) {
     // TODO: formalize oEmbed response according to http://oembed.com/
-    return res.send({
+    return res.json({
         type: 'rich',
         version: '1.0',
         // iframe scale trick: http://stackoverflow.com/a/11382661
-        html: `<iframe width=\"100%\" height=\"100%\" style=\"-webkit-transform:scale(0.5);-moz-transform-scale(0.5);\" src=\"${html}\" />`,
+        html: `<iframe width="100%" height="100%" style="-webkit-transform:scale(0.5);-moz-transform-scale(0.5);" src="${html}" />`,
         width: 1024, // TODO:
         height: 768 // TODO:
     });
 }
 
 var getErrResponse = function(res, statusCode, message) {
-    return res.status(statusCode).send({ status: statusCode, message: message });
+    return res.status(statusCode).json({ status: statusCode, message: message });
 }
 
 module.exports = appRouter;
